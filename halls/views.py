@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
-from .models import Hall
+from .models import Hall, Video
 from django.contrib.auth import authenticate, login
-# Create your views here.
+from .forms import VideoForm, SearchForm
+# from django.forms import formset_factory
 
 
 def home(request):
@@ -57,3 +58,24 @@ class DeleteHall(generic.DeleteView):
     model = Hall
     template_name = 'halls/delete_hall.html'
     success_url = reverse_lazy('dashboard')
+
+
+def add_video(request, pk):
+    # VideoFormSet = formset_factory(VideoForm, extra=5)
+    # form = VideoFormSet()
+    form = VideoForm()
+    search_form = SearchForm()
+
+    if request.method == 'POST':
+        # create
+        filled_form = VideoFormSet(request.POST)
+        if filled_form.is_valid():
+
+            video = Video()
+            video.url = filled_form.cleaned_data['url']
+            video.title = filled_form.cleaned_data['title']
+            video.youtube_id = filled_form.cleaned_data['youtube_id']
+            video.hall = Hall.objects.get(pk=pk)
+            video.save()
+
+    return render(request, 'halls/add_video.html', {'form': form, 'search_form': search_form})

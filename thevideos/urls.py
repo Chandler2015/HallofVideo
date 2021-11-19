@@ -21,6 +21,9 @@ urlpatterns = [
          views.UpdateHall.as_view(), name='update_hall'),
     path('hallofvideo/<int:pk>/delete',
          views.DeleteHall.as_view(), name='delete_hall'),
+    # videos
+    path('hallofvideo/<int:pk>/addvideo',
+         views.add_video, name='add_video'),
 
 
 
