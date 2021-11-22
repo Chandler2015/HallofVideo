@@ -66,6 +66,12 @@ class DeleteHall(generic.DeleteView):
     success_url = reverse_lazy('dashboard')
 
 
+class DeleteVideo(generic.DeleteView):
+    model = Video
+    template_name = 'videos/delete_video.html'
+    success_url = reverse_lazy('dashboard')
+
+
 def add_video(request, pk):
     # VideoFormSet = formset_factory(VideoForm, extra=5)
     # form = VideoFormSet()
@@ -107,7 +113,7 @@ def search_video(request):
         encoded_search_term = urllib.parse.quote(
             search_form.cleaned_data['search_term'])
         response = requests.get(
-            f'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q={encoded_search_term}&key={youtube_api_key}')
+            f'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=6&q={encoded_search_term}&key={youtube_api_key}')
         return JsonResponse(response.json())
 
     return JsonResponse({'error': 'Not able to validate form'})

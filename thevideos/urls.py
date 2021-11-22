@@ -27,7 +27,8 @@ urlpatterns = [
 
     path('hallofvideo/<int:pk>/addvideo',
          views.add_video, name='add_video'),
-
+    path('video/<int:pk>/delete',
+         views.DeleteVideo.as_view(), name='delete_video'),
 
 ]
 
