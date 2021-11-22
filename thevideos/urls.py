@@ -22,9 +22,11 @@ urlpatterns = [
     path('hallofvideo/<int:pk>/delete',
          views.DeleteHall.as_view(), name='delete_hall'),
     # videos
+    path('video/search',
+         views.search_video, name='search_video'),
+
     path('hallofvideo/<int:pk>/addvideo',
          views.add_video, name='add_video'),
-
 
 
 ]
